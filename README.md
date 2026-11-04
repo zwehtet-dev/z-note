@@ -15,11 +15,11 @@ A minimal Markdown notebook. Graphite and white, nothing else.
 
 ## Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FOWNER%2Fz-note&project-name=z-note&repository-name=z-note&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%7D%5D)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fzwehtet-dev%2Fz-note&project-name=z-note&repository-name=z-note&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22protocol%22%3A%22storage%22%7D%5D)
 
 The button clones the repo, creates a Neon Postgres database and sets `DATABASE_URL` for you. There's nothing else to configure: the database table is created on the first request.
 
-> Forking this repo? Replace `OWNER` in the button link above with your GitHub user or organization.
+> Forking this repo? Replace `zwehtet-dev` in the button link above with your GitHub user or organization.
 
 There's no authentication in v1. Anyone with the URL can read and edit notes, so keep the deployment URL private or put it behind [Vercel Deployment Protection](https://vercel.com/docs/deployment-protection).
 

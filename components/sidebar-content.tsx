@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { Pin, Plus } from "lucide-react";
 import { createNoteAction } from "@/app/actions";
+import { LocalDate } from "@/components/local-date";
 import { Logo } from "@/components/logo";
 import { SearchInput } from "@/components/search-input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import type { NoteSummary } from "@/lib/notes";
 import { cn } from "@/lib/utils";
-
-const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium" });
 
 export function NewNoteButton({ className }: { className?: string }) {
   return (
@@ -48,7 +47,9 @@ export function SidebarContent({ notes, q, activeId }: { notes: NoteSummary[]; q
                 <span className="flex-1 truncate text-sm font-medium">{n.title}</span>
                 {n.pinned && <Pin className="size-3.5 shrink-0 text-muted-foreground" aria-label="Pinned" />}
               </span>
-              <span className="text-xs text-muted-foreground">{dateFormat.format(n.updatedAt)}</span>
+              <span className="block h-4 text-xs text-muted-foreground">
+                <LocalDate date={n.updatedAt} />
+              </span>
             </Link>
           ))
         )}

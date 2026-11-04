@@ -56,6 +56,18 @@ it("flush saves a pending value immediately", async () => {
   expect(statuses.at(-1)).toBe("saved");
 });
 
+it("a failed flush leaves the edit pending so the next flush retries it", async () => {
+  const save = vi.fn().mockRejectedValueOnce(new Error("offline")).mockResolvedValue(undefined);
+  const { s, statuses } = setup(save);
+  s.update("draft");
+  await s.flush();
+  expect(statuses.at(-1)).toBe("error");
+  await s.flush();
+  expect(save).toHaveBeenCalledTimes(2);
+  expect(save).toHaveBeenLastCalledWith("draft");
+  expect(statuses.at(-1)).toBe("saved");
+});
+
 it("flush with nothing pending does not save", async () => {
   const save = vi.fn().mockResolvedValue(undefined);
   const { s } = setup(save);

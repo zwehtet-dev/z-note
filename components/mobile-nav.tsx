@@ -23,7 +23,8 @@ export function MobileNav({ children }: { children: React.ReactNode }) {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="p-0">
+      {/* The default close button would sit on top of the sidebar's theme toggle; overlay tap and Escape close it. */}
+      <SheetContent side="left" className="p-0" showCloseButton={false}>
         <SheetTitle className="sr-only">Notes</SheetTitle>
         {children}
       </SheetContent>

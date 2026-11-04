@@ -25,16 +25,19 @@ export function NoteEditor({ note }: { note: Note }) {
   const [content, setContent] = useState(note.content);
   const [status, setStatus] = useState<SaveStatus>("saved");
   const [view, setView] = useState<View>("split");
+  // One autosaver per component instance (keyed by note id). Cache Components hides pages in <Activity>
+  // instead of unmounting them, so unsaved state must survive hide/show; cleanup only flushes.
   const saver = useRef<ReturnType<typeof createAutosaver<string>>>(null);
+  saver.current ??= createAutosaver<string>({
+    save: (c) => saveNoteAction(note.id, c),
+    delay: 800,
+    onStatus: setStatus,
+  });
 
   useEffect(() => {
-    const s = createAutosaver<string>({ save: (c) => saveNoteAction(note.id, c), delay: 800, onStatus: setStatus });
-    saver.current = s;
-    return () => {
-      void s.flush();
-      s.dispose();
-    };
-  }, [note.id]);
+    const s = saver.current!;
+    return () => void s.flush();
+  }, []);
 
   useEffect(() => {
     try {
@@ -90,7 +93,7 @@ export function NoteEditor({ note }: { note: Note }) {
             value={content}
             onChange={(e) => {
               setContent(e.target.value);
-              saver.current?.update(e.target.value);
+              saver.current!.update(e.target.value);
             }}
             className="h-full w-full resize-none overflow-y-auto bg-transparent p-6 font-mono text-sm outline-none"
           />
